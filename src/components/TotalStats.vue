@@ -4,7 +4,43 @@
     <div>
       <table>
         <th>Owner Name</th>
-        
+        <th>Reg Wins</th>
+        <th>Reg Losses</th>
+        <th>Reg Ties</th>
+        <th>Total Games</th>
+        <th>Win %</th>
+        <th>Reg Score For</th>
+        <th>Reg Score Against</th>
+        <th>PPG</th>
+        <th>Highest Reg Score</th>
+        <th>Lowest Reg Score</th>
+        <th>Post Wins</th>
+        <th>Post Loses</th>
+        <th>Total Games</th>
+        <th>Win %</th>
+        <th>Post Score For</th>
+        <th>Post Score Against</th>
+        <th>PPG</th>
+        <tr v-for="owner in statsArray" :key="owner">
+          <td>{{owner.fullName}}</td>
+          <td>{{owner.regWins}}</td>
+          <td>{{owner.regLosses}}</td>
+          <td>{{owner.regTies}}</td>
+          <td>{{owner.regWins + owner.regLosses + owner.regTies}}</td>
+          <td>{{(owner.regWins / (owner.regWins + owner.regLosses + owner.regTies) * 100).toFixed(2)}}%</td>
+          <td>{{owner.regScoreFor.toFixed(2)}}</td>
+          <td>{{owner.regScoreAgainst.toFixed(2)}}</td>
+          <td>{{(owner.regScoreFor / (owner.regWins + owner.regLosses + owner.regTies)).toFixed(2)}}</td>
+          <td>{{owner.highestRegScore.toFixed(2)}}</td>
+          <td>{{owner.lowestRegScore.toFixed(2)}}</td>
+          <td>{{owner.postWins}}</td>
+          <td>{{owner.postLosses}}</td>
+          <td>{{owner.postWins + owner.postLosses}}</td>
+          <td>{{(owner.postWins / (owner.postWins + owner.postLosses) * 100).toFixed(2)}}%</td>
+          <td>{{owner.postScoreFor.toFixed(2)}}</td>
+          <td>{{owner.postScoreAgainst.toFixed(2)}}</td>
+          <td>{{(owner.postScoreFor / (owner.postWins + owner.postLosses)).toFixed(2)}}</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -14,21 +50,64 @@
 export default {
   name: "TotalStats",
   props: {
-    msg: String,
+    msg: String
+  },
+  data() {
+    return {
+      statsArray: []
+    };
+  },
+  created() {
+    this.getTotalStats();
   },
   methods: {
-    
+    getTotalStats() {
+      let statsAPIURL =
+        "http://localhost:8080/LeagueDataAccess/api/totalstats/";
+      return fetch(statsAPIURL)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Response not okay");
+          }
+        })
+        .then(contents => {
+          this.statsArray = contents;
+        })
+        .catch(err => {
+          console.log("ERROR: " + err);
+        });
+    }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
   text-align: center;
 }
 h3 {
   margin: 40px 0 0;
+}
+th,
+td {
+  border: 1px solid black;
+}
+tr:nth-child(odd) {
+  background-color: rgb(248, 203, 179);
+}
+tr:nth-child(even) {
+  background-color: rgb(208, 206, 206);
+}
+th:first-child {
+  visibility:hidden;
+}
+th:nth-child(odd) {
+  background-color: rgb(180, 198, 231);
+}
+th:nth-child(even) {
+  background-color: rgb(142, 169, 219);
 }
 ul {
   list-style-type: none;
