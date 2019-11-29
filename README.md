@@ -1,5 +1,7 @@
 # league-data-webapp
 
+Front End for LeagueDataAccess
+
 ## Project setup
 ```
 npm install
