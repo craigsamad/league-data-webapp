@@ -25,6 +25,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history', //remove this if hosted externally
   routes
 })
 
