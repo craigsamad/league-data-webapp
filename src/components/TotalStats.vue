@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import ownerService from '@/service/OwnerService.js'
+
 export default {
   name: "TotalStats",
   props: {
@@ -58,27 +60,10 @@ export default {
     };
   },
   created() {
-    this.getTotalStats();
+    ownerService.getTotalStats().then(parsedStats => this.statsArray = parsedStats);
   },
   methods: {
-    getTotalStats() {
-      let statsAPIURL =
-        "http://localhost:8080/LeagueDataAccess/api/totalstats/";
-      return fetch(statsAPIURL)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Response not okay");
-          }
-        })
-        .then(contents => {
-          this.statsArray = contents;
-        })
-        .catch(err => {
-          console.log("ERROR: " + err);
-        });
-    }
+    
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="individualstats">
-    <h1>This is the Individual Stats page</h1>
+  <div class="seasonstats">
+    <h1>This is the Season Stats page</h1>
   </div>
 </template>
 

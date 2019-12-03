@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import IndividualStats from '../views/IndividualStats.vue'
+import SeasonStats from '../views/SeasonStats.vue'
 import H2HStats from '../views/H2HStats.vue'
 
 Vue.use(VueRouter)
@@ -13,9 +13,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/individualstats',
-    name: 'individualstats',
-    component: IndividualStats
+    path: '/seasonstats',
+    name: 'seasonstats',
+    component: SeasonStats
   },
   {
     path: '/h2hstats',

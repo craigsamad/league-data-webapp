@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/individualstats">Individual Stats</router-link> |
+      <router-link to="/seasonstats">Season Stats</router-link> |
       <router-link to="/h2hstats">Head to Head Stats</router-link>
     </div>
     <router-view/>
