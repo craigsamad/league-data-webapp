@@ -1,6 +1,6 @@
 <template>
   <div class="all-time-stats">
-    <h1>{{ msg }}</h1>
+    <h1>All Time League Stats</h1>
     <div>
       <table>
         <th>Owner Name</th>
@@ -22,7 +22,8 @@
         <th>Post Score Against</th>
         <th>PPG</th>
         <tr v-for="owner in statsArray" :key="owner">
-          <td>{{owner.fullName}}</td>
+          <td v-if="owner.firstName === 'Zach'">{{owner.firstName + ' ' + owner.lastName.substring(0,1)}}</td>
+          <td v-else>{{owner.firstName}}</td>
           <td>{{owner.regWins}}</td>
           <td>{{owner.regLosses}}</td>
           <td>{{owner.regTies}}</td>
@@ -47,12 +48,12 @@
 </template>
 
 <script>
-import ownerService from '@/service/OwnerService.js'
+import API_Service from '@/service/API_Service.js'
 
 export default {
   name: "TotalStats",
   props: {
-    msg: String
+    
   },
   data() {
     return {
@@ -60,7 +61,7 @@ export default {
     };
   },
   created() {
-    ownerService.getTotalStats().then(parsedStats => this.statsArray = parsedStats);
+    API_Service.getTotalStats().then(parsedStats => this.statsArray = parsedStats);
   },
   methods: {
     

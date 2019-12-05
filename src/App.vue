@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/totalstats">Total Stats</router-link> |
       <router-link to="/seasonstats">Season Stats</router-link> |
-      <router-link to="/h2hstats">Head to Head Stats</router-link>
+      <router-link to="/h2hstats">Head to Head Stats</router-link> |
+      <router-link to="/msgboard">Message Board</router-link>
     </div>
     <router-view/>
   </div>

@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <TotalStats msg="All Time League Stats" />
+    <ProfilePage />
   </div>
 </template>
 
 <script>
-import TotalStats from '@/components/TotalStats.vue'
+import ProfilePage from '@/components/ProfilePage.vue'
 
 export default {
   name: 'home',
   components: {
-    TotalStats
-  }
+    ProfilePage
+  },
 }
 </script>
 

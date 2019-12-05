@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ownerService from '@/service/OwnerService.js'
+import API_Service from '@/service/API_Service.js'
 
 export default {
   name: "OwnersDropDown",
@@ -21,7 +21,7 @@ export default {
     };
   },
   created() {
-    ownerService
+    API_Service
       .getAllOwners()
       .then(owners => (this.ownerArray = owners));
   }

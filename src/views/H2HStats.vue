@@ -4,12 +4,12 @@
     <div class="owner-drop-downs">
       <div>
         <select v-model="selected1">
-            <option v-for="owner in setDropDownOneOptions" :key="owner.ownerId" :value="owner.ownerId">{{owner.fullName}}</option>
+            <option v-for="owner in setDropDownOneOptions" :key="owner.ownerId" :value="owner.ownerId">{{owner.firstName === 'Zach' ? owner.firstName + ' ' + owner.lastName.substring(0,1) : owner.firstName}}</option>
         </select>
       </div>
       <div>
         <select v-model="selected2">
-            <option v-for="owner in setDropDownTwoOptions" :key="owner.ownerId" :value="owner.ownerId">{{owner.fullName}}</option>
+            <option v-for="owner in setDropDownTwoOptions" :key="owner.ownerId" :value="owner.ownerId">{{owner.firstName === 'Zach' ? owner.firstName + ' ' + owner.lastName.substring(0,1) : owner.firstName}}</option>
         </select>
       </div>
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import ownerService from '@/service/OwnerService.js';
+import API_Service from '@/service/API_Service.js';
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
     };
   },
   created() {
-    ownerService
+    API_Service
       .getAllOwners()
       .then(owners => (this.ownerArray = owners));
   },
