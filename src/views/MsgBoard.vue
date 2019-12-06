@@ -2,39 +2,47 @@
   <div class="main">
     <h1>Message Board</h1>
 
-    <a href="#" v-on:click.prevent="formVisible = true" v-show="formVisible === false">New Post</a>
+    <button  class="btn btn-primary" v-on:click.prevent="formVisible = true" v-show="formVisible === false">New Post</button>
 
     <form @submit.prevent="addNewPost" v-show="formVisible">
       <div class="form-element">
         <label for="poster">Name:</label>
-        <input v-model="newPost.poster" id="poster" type="text" />
+        <input v-model="newPost.poster" id="poster" type="text" required/>
       </div>
       <div class="form-element">
         <label for="post">Message Text:</label>
-        <textarea v-model="newPost.post" id="post"></textarea>
+        <textarea v-model="newPost.post" id="post" required></textarea>
       </div>
       <button :disabled="isFormValid === false">Submit</button>
       <button type="cancel" @click.prevent="resetForm">Cancel</button>
     </form>
 
     <div class="post" v-for="post in postsArray" v-bind:key="post.postId">
-      <h4>{{ post.posterName }}</h4>
-      <p>{{ post.postText }}</p>
-      <button type="submit" @click="deletePost(post.postId)">Delete</button>
+      <board-post
+        :postId="post.postId"
+        :posterName="post.posterName"
+        :startingPostText="post.postText"
+        v-on:deleteEvent="reloadPosts()"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import API_Service from "@/service/API_Service.js";
+import BoardPost from "@/components/BoardPost.vue";
 import auth from "../auth";
 
 export default {
   name: "msg-board",
+  components: {
+    BoardPost
+  },
   data() {
     return {
       formVisible: false,
       newPost: {
+        id: null,
         poster: "",
         post: ""
       },
@@ -61,6 +69,9 @@ export default {
       this.createNewPost();
       this.resetForm();
     },
+    reloadPosts() {
+      API_Service.getBoardPosts().then(posts => (this.postsArray = posts));
+    },
     createNewPost() {
       return fetch(`${process.env.VUE_APP_REMOTE_API}/api/boardposts/`, {
         method: "POST",
@@ -69,33 +80,14 @@ export default {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          postId: this.newPost.id,
           posterName: this.newPost.poster,
           postText: this.newPost.post
         })
       })
         .then(response => {
           if (response.ok) {
-            API_Service.getBoardPosts().then(
-              posts => (this.postsArray = posts)
-            );
-          }
-        })
-        .catch(err => console.error(err));
-    },
-    deletePost(id) {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/api/boardposts/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + auth.getToken(),
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({postId: id})
-      })
-        .then(response => {
-          if (response.ok) {
-            API_Service.getBoardPosts().then(
-              posts => (this.postsArray = posts)
-            );
+            this.reloadPosts();
           }
         })
         .catch(err => console.error(err));
@@ -105,6 +97,12 @@ export default {
 </script>
 
 <style>
+.view {
+  border-color: transparent;
+  background-color: initial;
+  color: initial;
+}
+
 div.main {
   margin: 1rem 0;
 }

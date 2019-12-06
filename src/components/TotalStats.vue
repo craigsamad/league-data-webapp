@@ -2,7 +2,7 @@
   <div class="all-time-stats">
     <h1>All Time League Stats</h1>
     <div>
-      <table>
+      <table class="table table-striped">
         <th>Owner Name</th>
         <th>Reg Wins</th>
         <th>Reg Losses</th>
@@ -22,7 +22,9 @@
         <th>Post Score Against</th>
         <th>PPG</th>
         <tr v-for="owner in statsArray" :key="owner">
-          <td v-if="owner.firstName === 'Zach'">{{owner.firstName + ' ' + owner.lastName.substring(0,1)}}</td>
+          <td
+            v-if="owner.firstName === 'Zach'"
+          >{{owner.firstName + ' ' + owner.lastName.substring(0,1)}}</td>
           <td v-else>{{owner.firstName}}</td>
           <td>{{owner.regWins}}</td>
           <td>{{owner.regLosses}}</td>
@@ -48,24 +50,22 @@
 </template>
 
 <script>
-import API_Service from '@/service/API_Service.js'
+import API_Service from "@/service/API_Service.js";
 
 export default {
   name: "TotalStats",
-  props: {
-    
-  },
+  props: {},
   data() {
     return {
       statsArray: []
     };
   },
   created() {
-    API_Service.getTotalStats().then(parsedStats => this.statsArray = parsedStats);
+    API_Service.getTotalStats().then(
+      parsedStats => (this.statsArray = parsedStats)
+    );
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
 
@@ -75,6 +75,10 @@ h1 {
 }
 h3 {
   margin: 40px 0 0;
+}
+table {
+  display: block;
+  overflow-x: auto;
 }
 th,
 td {
@@ -87,7 +91,7 @@ tr:nth-child(even) {
   background-color: rgb(208, 206, 206);
 }
 th:first-child {
-  visibility:hidden;
+  visibility: hidden;
 }
 th:nth-child(odd) {
   background-color: rgb(180, 198, 231);
