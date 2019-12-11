@@ -15,7 +15,7 @@
       </div>
       <button :disabled="isFormValid === false">Submit</button>
       <button type="cancel" @click.prevent="resetForm">Cancel</button>
-    </form>
+    </form> 
 
     <div class="post" v-for="post in postsArray" v-bind:key="post.postId">
       <board-post
